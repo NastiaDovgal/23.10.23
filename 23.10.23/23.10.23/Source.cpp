@@ -24,7 +24,42 @@ int main()
 		int count = 0;
 		int x = 0;
 		bool y = 0;
-		
+		fseek(file1, 0, SEEK_SET);
+		while (fgets(str, 500, file1))
+		{
+			count = 0;
+			for (int i = strlen(str) - 1; i >= 0; i--)
+				if (str[i] == ' ')
+				{
+					count += 1;
+					break;
+				}
+			if (count == 0)
+			{
+				lastLine = x;
+				y = 1;
+			}
+			x++;
+		}
+		char str2[] = "------------\n";
+		fseek(file1, 0, SEEK_SET);
+		if (!y)
+		{
+			for (int i = 0; i < countLine; i++)
+				fputs(fgets(str, 500, file1), file2);
+			fputs(str2, file2);
+		}
+		else
+		{
+			int i = 0;
+			while (i != lastLine + 1)
+			{
+				fputs(fgets(str, 500, file1), file2);
+				i++;
+			}
+			fputs(str2, file2);
+			fputs(fgets(str, 500, file1), file2);
+		}
 
 		fclose(file1);
 		fclose(file2);
